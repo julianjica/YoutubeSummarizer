@@ -9,11 +9,15 @@ def mp3_downloader():
     This function asks for the url of the Youtube video and then downloads the
     mp3 file associated with that video.
     """
+    print("="*50)
+    print("STEP 1: Downloading Audio from YouTube")
+    print("="*50)
+
     # We make the output directory if it does not already exist
     os.makedirs("output", exist_ok=True)
 
     # And then download the audio
-    url = input("Please type the url of the video > ")
+    url = input("Please enter the YouTube video URL: ")
     ydl_opts = {
         'format': 'bestaudio/best',
         'outtmpl': 'output/output',
@@ -24,7 +28,9 @@ def mp3_downloader():
         }],
     }
     with YoutubeDL(ydl_opts) as ydl:
+        print("\nDownloading...")
         ydl.download([url])
+    print("\nDownload complete!")
 
 def transcribe_video(size = "base"):
     """
@@ -34,8 +40,14 @@ def transcribe_video(size = "base"):
     :size: (string) name of the model
     :returns: (string) transcription of the video
     """
+    print("\n" + "="*50)
+    print("STEP 2: Transcribing Audio to Text")
+    print("="*50)
+    print(f"Using whisper model: '{size}'")
+    print("Transcribing... This may take a moment.")
     model = whisper.load_model(size)
-    result = model.transcribe("output/output.mp3")
+    result = model.transcribe("output/output.mp3", verbose = True)
+    print("Transcription complete!")
     return result["text"]
 
 def gemini_chat(transcript):
@@ -46,6 +58,10 @@ def gemini_chat(transcript):
 
     :transcript: (string) transcript of the video
     """
+    print("\n" + "="*50)
+    print("STEP 3: Summarizing and Chatting")
+    print("="*50)
+
     # Setting Client with GEMINI_API_KEY
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
 
@@ -70,16 +86,28 @@ def gemini_chat(transcript):
     # We create the chat environment
     chat = client.chats.create(model="gemini-2.0-flash-001")
     # and send the transcript to be summarized
-    print("="*20)
-    print(chat.send_message(first_prompt + transcript).text)
-    print("="*20)
+    print("\nGenerating summary...")
+    summary = chat.send_message(first_prompt + transcript).text
+    print("\n--- VIDEO SUMMARY ---")
+    print(summary)
+    print("--- END OF SUMMARY ---")
 
     # Questions loop
+    print("\nYou can now ask questions about the video.")
     user_input = ""
     while user_input != "/quit":
-        user_input = input("(/quit to quit) > ")
-        print(chat.send_message(user_input).text)
+        user_input = input("\nYour question (/quit to exit) > ")
+        if user_input != "/quit":
+            print("\n...Thinking...")
+            print(chat.send_message(user_input).text)
 
 if __name__ == "__main__":
-    # mp3_downloader()
-    print(gemini_chat(transcribe_video()))
+    try:
+        mp3_downloader()
+        transcript = transcribe_video()
+        gemini_chat(transcript)
+        print("\n" + "="*50)
+        print("Session finished. Thank you for using the YouTube Summarizer!")
+        print("="*50)
+    except Exception as e:
+        print(f"\nAn error occurred: {e}")
