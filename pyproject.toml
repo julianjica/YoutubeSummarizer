@@ -6,5 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "google-genai>=1.31.0",
+    "rich>=14.1.0",
+    "whisper-ai>=1.0.0.1",
     "yt-dlp>=2025.8.20",
 ]
