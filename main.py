@@ -30,6 +30,7 @@ def mp3_downloader():
             'preferredquality': '192',
         }],
         'quiet': True, # To keep the output clean
+        'no_warnings': True,
     }
     with console.status("[bold green]Downloading...[/bold green]") as status:
         with YoutubeDL(ydl_opts) as ydl:
@@ -46,9 +47,8 @@ def transcribe_video(size="base"):
     """
     console.print(Panel(f"[bold cyan]STEP 2: Transcribing Audio to Text (using whisper model: '{size}')[/bold cyan]", expand=False))
     
-    with console.status("[bold green]Transcribing... This may take a moment.[/bold green]") as status:
-        model = whisper.load_model(size)
-        result = model.transcribe("output/output.mp3")
+    model = whisper.load_model(size)
+    result = model.transcribe("output/output.mp3", verbose = False)
     
     console.print("[bold green]✔ Transcription complete![/bold green]")
     return result["text"]
@@ -107,6 +107,6 @@ if __name__ == "__main__":
         mp3_downloader()
         transcript = transcribe_video()
         gemini_chat(transcript)
-        console.print(Panel("[bold green]Session finished. Thank you for using the YouTube Summarizer![/bold green]", expand=False))
+        console.print(Panel("[bold green]Session finished.[/bold green]", expand=False))
     except Exception:
         console.print_exception(show_locals=True)
