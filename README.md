@@ -62,6 +62,25 @@ uv run python main.py
 ```
 The script will then guide you through the process.
 
+## Running with Docker
+
+For the easiest setup, you can run this application inside a Docker container. This way, you don't need to have Python or `uv` installed on your machine; you only need Docker.
+
+1.  **Build the Docker image**:
+    From the project's root directory, run the following command to build the Docker image:
+    ```bash
+    docker build -t youtube-summarizer .
+    ```
+
+2.  **Run the Docker container**:
+    After the image is built, you can run the application with this command:
+    ```bash
+    docker run -it --rm -e GEMINI_API_KEY=$GEMINI_API_KEY youtube-summarizer
+    ```
+    -   `-it` runs the container in interactive mode, which is necessary for the script's input prompts.
+    -   `--rm` automatically removes the container when it exits.
+    -   `-e GEMINI_API_KEY=$GEMINI_API_KEY` passes your API key into the container.
+
 ## License
 
 This project is licensed under the MIT License.
