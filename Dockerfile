@@ -5,7 +5,7 @@ FROM python:3.11-slim
 WORKDIR /app
 
 # Copy the dependency definition files
-COPY pyproject.toml uv.lock* ./
+COPY pyproject.toml ./
 
 # Install uv, our package manager
 RUN pip install uv
