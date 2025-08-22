@@ -56,11 +56,11 @@ This script requires a Google Gemini API key.
 
 ## Usage
 
-To run the script, simply execute the `main.py` file:
+To run the script, you can use `uv run`, which will execute the command within the managed environment:
 ```bash
-python main.py
+uv run python main.py
 ```
-The script will then guide you through the process, asking for the YouTube video URL and providing the summary and chat interface.
+The script will then guide you through the process.
 
 ## License
 
