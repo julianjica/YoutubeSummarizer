@@ -1,13 +1,13 @@
 # YouTube Downloader & Summarizer
 
-A simple yet powerful CLI tool to download YouTube videos, transcribe the audio, and generate a comprehensive summary using Google's Gemini AI. Perfect for quickly getting the essence of a video without watching it.
+A simple yet powerful CLI tool to download YouTube videos, transcribe the audio, generate a comprehensive summary, and then **chat with an AI about the video's content**. It's the perfect tool to quickly understand a video and then dive deeper into the topics that interest you the most.
 
 ## Features
 
 -   **Download YouTube Videos**: Automatically downloads the audio from any YouTube video as an MP3 file.
 -   **Transcribe Audio**: Uses OpenAI's Whisper to generate a full transcript of the video.
 -   **Summarize with Gemini**: Leverages the power of Google's Gemini AI to create a detailed and concise summary of the transcript.
--   **Interactive Q&A**: After the summary, you can ask questions about the video in an interactive chat session.
+-   **Chat with the Video**: After the summary, you can have a conversation with the AI. Ask follow-up questions, get clarifications, or discuss the video's content in detail.
 -   **Beautiful CLI**: Uses the `rich` library to provide a beautiful and user-friendly command-line interface.
 -   **Lightweight and Efficient**: Designed to run on low-specification machines, even without a dedicated GPU.
 
@@ -60,7 +60,7 @@ To run the script, you can use `uv run`, which will execute the command within t
 ```bash
 uv run python main.py
 ```
-The script will then guide you through the process.
+The script will guide you through the process, providing a summary of the video and then opening a chat session for you to discuss the video with the AI.
 
 ## Running with Docker
 
