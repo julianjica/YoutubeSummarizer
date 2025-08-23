@@ -1,4 +1,5 @@
 # YouTube Downloader & Summarizer
+[![asciicast](https://asciinema.org/a/735131.svg)](https://asciinema.org/a/735131)
 
 A simple yet powerful CLI tool to download YouTube videos, transcribe the audio, generate a comprehensive summary, and then **chat with an AI about the video's content**. It's the perfect tool to quickly understand a video and then dive deeper into the topics that interest you the most.
 
