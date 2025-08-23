@@ -1,6 +1,9 @@
 # Start with a lightweight Python base image
 FROM python:3.11-slim
 
+# Update package lists and install ffmpeg
+RUN apt-get update && apt-get install -y ffmpeg
+
 # Set the working directory inside the container
 WORKDIR /app
 
@@ -11,10 +14,9 @@ COPY pyproject.toml ./
 RUN pip install uv
 
 # Install the Python dependencies using uv
-# This creates the virtual environment inside the container
 RUN uv sync
 
-# Copy the rest of your application code into the container
+# Copy the rest of the application code into the container
 COPY . .
 
 # Set the command to run when the container starts
